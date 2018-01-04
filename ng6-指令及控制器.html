@@ -1,29 +1,46 @@
 <!DOCTYPE html>
 <html ng-app="myModule">
+
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
 </head>
+
 <body>
-    <hello>
-        <div>这里有内存</div>
-    </hello>
+    <div ng-controller="ctrl">
+        <loader howToLoad='loadData()'>滑动加载</loader>
+    </div>
+    <div ng-controller="ctrl2">
+        <loader howToLoad='loadData2()'>滑动加载</loader>
+    </div>
 </body>
-<script src="./angular-1.6.8/"></script>
+<script src="./angular-1.6.8/angular.js"></script>
 <script>
-var myModule = angular.module('myModule',[]);
+    angular.module('myModule', [])
+        .directive('loader', function () {
+            return {
+                restrict: 'AE',
+                link: function (scope, element, attr) {
+                    element.bind('mouseenter', function () {
+                        // scope.loadData();
+                        // scope.$apply('loadData()')
+                        scope.$apply(attr.howtoload)
+                    })
+                }
 
-myModule.directive('hello',function ($templateCache) {
-    return {
-        restrict : 'AE', // AEMC attribute属性 element元素 M注释 class样式
-        // template: '<div>Hi everyone!</div><div ng-transclude></div>',
-        transclude: true,
-        templateUrl: 'hello.html',
-        // template: $templateCache.get("hello.html"),
-        // replace: true
-
-    }
-})
+            }
+        })
+        .controller('ctrl', ['$scope', function ($scope) {
+            $scope.loadData = function () {
+                console.log("加载数据中")
+            }
+        }])
+        .controller('ctrl2', ['$scope', function ($scope) {
+            $scope.loadData2 = function () {
+                console.log("加载数据中2222")
+            }
+        }])
 
 </script>
+
 </html>

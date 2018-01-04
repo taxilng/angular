@@ -5,23 +5,22 @@
     <title></title>
 </head>
 <body>
-    <hello>
-        <div>这里有内存</div>
-    </hello>
+    <hello></hello>
+    <div hello></div>
+    <div class="hello"></div>
+    <!-- directive:hello -->
 </body>
-<script src="angular-1.2.29.js"></script>
+<script src="./angular-1.6.8/angular.js"></script>
 <script>
 var myModule = angular.module('myModule',[]);
 
 myModule.directive('hello',function ($templateCache) {
     return {
-        restrict : 'AE', // AEMC attribute属性 element元素 M注释 class样式
-        // template: '<div>Hi everyone!</div><div ng-transclude></div>',
-        transclude: true,
-        templateUrl: 'hello.html',
-        // template: $templateCache.get("hello.html"),
-        // replace: true
-
+        scope: {},
+        restrict : 'AEMC', 
+        //  template: '<div>Hi everyone!</div>',
+        templateUrl: "hello.html",
+        replace: true
     }
 })
 
