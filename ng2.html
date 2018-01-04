@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <div>
+        <div ng-controller="GreetCtrl">
+            hello {{name}}
+        </div>
+        <div ng-controller="ListCtrl">
+            <ol>
+                <li ng-repeat="name in names">
+                    {{name}} from {{department}}
+                </li>
+            </ol>
+        </div>
+    </div>
+</body>
+<script src="angular-1.2.29.js"></script>
+<script>
+    function GreetCtrl($scope, $rootScope) {
+        $scope.name = 'World'
+        $rootScope.department = 'Angular'
+    }
+    function ListCtrl($scope) {
+        $scope.names = ['Igor', 'Misko', 'Voja']
+
+    }
+</script>
+</html>
