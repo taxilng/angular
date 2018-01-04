@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<div class="multi-transclude">
+    <div class="multi-transclude__title" ng-transclude="title"></div>
+    <div>忽略我,我就是证明我是在模板中的1</div>
+    <div class="multi-transclude__body" ng-transclude="body"></div>
+    <div>忽略我,我就是证明我是在模板中的2</div>
+    <div class="multi-transclude__footer" ng-transclude="footer"></div>
+</div>

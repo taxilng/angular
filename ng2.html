@@ -1,32 +1,41 @@
 <!DOCTYPE html>
 <html ng-app>
+
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
 </head>
+
 <body>
-    <div>
-        <div ng-controller="GreetCtrl">
-            hello {{name}}
-        </div>
-        <div ng-controller="ListCtrl">
-            <ol>
-                <li ng-repeat="name in names">
-                    {{name}} from {{department}}
-                </li>
-            </ol>
-        </div>
+
+    <div ng-controller="EventController">
+        Root Scope
+        <tt>MyEvent</tt> count: {{count}}
+        <ul>
+            <li ng-repeat="i in [1]" ng-controller="EventController">
+                <button ng-click="$emit('MyEvent')"> $emit('MyEvent')</button>
+                <button ng-click="$broadcast('MyEvent')"> $broadcast('MyEvent')</button>
+                <br/> Middle scope
+                <tt>MyEvent</tt> count: {{count}}
+                <ul>
+                    <li ng-repeat="item in [1, 2]" ng-controller="EventController">
+                        Leaf scope
+                        <tt>MyEvent</tt> count: {{count}}
+                    </li>
+                </ul>
+            </li>
+        </ul>
     </div>
+    div.panel
 </body>
 <script src="angular-1.2.29.js"></script>
 <script>
-    function GreetCtrl($scope, $rootScope) {
-        $scope.name = 'World'
-        $rootScope.department = 'Angular'
-    }
-    function ListCtrl($scope) {
-        $scope.names = ['Igor', 'Misko', 'Voja']
-
+    function EventController($scope) {
+        $scope.count = 0
+        $scope.$on('MyEvent', function () {
+            $scope.count++
+        })
     }
 </script>
+
 </html>
