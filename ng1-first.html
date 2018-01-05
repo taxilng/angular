@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang='en' ng-app="myApp">
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <a ui-sref="home">home</a>
+    <a ui-sref="about">about</a>
+    <div ui-view></div>
+</body>
+<script src="./angular.js"></script>
+<script src="./angular-ui-router.js"></script>
+<script>
+    (function () {
+        angular
+            .module('myApp', ['ui.router'])
+    })()
+</script>
+<script>
+        (function () {
+            angular
+                .module('myApp')
+                .config(stateConfig)
+            stateConfig.$inject = ['$stateProvider', '$urlRouterProvider']
+            function stateConfig($stateProvider, $urlRouterProvider) {
+                $urlRouterProvider.otherwise('/');
+
+                $stateProvider
+                    .state('home', {
+                        url: '/home',
+                        // templateUrl: "home.html",
+                        template: "<div>我才不是home</div>"
+                    })
+                    .state('about', {
+                        url: '/about',
+                        // templateUrl: "home.html",
+                        template: "<div>我才不是about</div>"
+                    })
+            }
+
+        })()
+    // var myApp = angular.module('myApp', ['ui.router'])
+    // myApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+    //     $urlRouterProvider.otherwise('/');
+
+    //     $stateProvider
+    //         .state('home', {
+    //             url: '/home',
+    //             // templateUrl: "home.html",
+    //             template: "<div>我才不是home</div>"
+    //         })
+    //         .state('about', {
+    //             url: '/about',
+    //             // templateUrl: "home.html",
+    //             template: "<div>我才不是about</div>"
+    //         })
+    // }])
+</script>
+
+</html>
