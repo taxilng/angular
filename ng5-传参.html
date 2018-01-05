@@ -6,8 +6,8 @@
 </head>
 
 <body>
-    <a ui-sref="home">home</a>
-    <a ui-sref="home.child">子路由</a>
+    <a ui-sref="index({id:30})">index</a>
+    <a ui-sref="test({username:'jack'})">test</a>
     <div ui-view></div>
 </body>
 <script src="./angular.js"></script>
@@ -30,15 +30,23 @@
                 $stateProvider
                     .state('home', {
                         url: '/home',
-                        // templateUrl: "home.html",
-                        template: "<div>我才不是home"+
-                        "<div ui-view></div>"+
-                        "</div>"
+                        template: "<div>我才不是home</div>"
                     })
-                    .state('home.child', {
-                        url: '/about',
-                        // templateUrl: "home.html",
-                        template: "<div>我才不是about</div>"
+                    .state('index', {
+                        url: '/index/:id',
+                        template: "<div>index内容</div>",
+                        controller: function($stateParams){
+                           console.log($stateParams.id);
+                            
+                        }
+                    })
+                    .state('test', {
+                        url: '/test/:username',
+                        template: "<div>test内容</div>",
+                        controller: function($stateParams){
+                           console.log($stateParams.username);
+                            
+                        }
                     })
             }
 
