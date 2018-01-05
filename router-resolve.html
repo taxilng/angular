@@ -6,8 +6,7 @@
 </head>
 
 <body>
-    <a ui-sref="index({id:30})">index</a>
-    <a ui-sref="test({username:'jack'})">test</a>
+    <a ui-sref="index">index</a>
     <div ui-view></div>
 </body>
 <script src="./angular.js"></script>
@@ -33,19 +32,37 @@
                         template: "<div>我才不是home</div>"
                     })
                     .state('index', {
-                        url: '/index/{id}',
+                        url: '/index',
                         template: "<div>index内容</div>",
-                        controller: function($stateParams){
-                           console.log($stateParams.id);
-                            
+                        resolve: {
+                            user: function () {
+                                return {
+                                    name: 'javk',
+                                    email: 'hoperun'
+                                }
+
+                            },
+                            myId: function ($http, user) {
+                                 $http({
+                                    method: 'GET',
+                                    url: 'https://cnodejs.org/api/v1/topics'
+                                }).then(function(data){
+                                        user.api = data.data.data
+                                })
+                            }
+                        },
+                        controller: function (user, user,myId) {
+                            // alert(user.name)
+                            // alert(user.email)
+                            console.log(user)
                         }
                     })
                     .state('test', {
                         url: '/test/:username',
                         template: "<div>test内容</div>",
-                        controller: function($stateParams){
-                           console.log($stateParams.username);
-                            
+                        controller: function ($stateParams) {
+                            console.log($stateParams.username);
+
                         }
                     })
             }
