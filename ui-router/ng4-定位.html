@@ -6,12 +6,13 @@
 </head>
 
 <body>
-    <a ui-sref="index({id:30})">index</a>
-    <a ui-sref="test({username:'jack'})">test</a>
-    <div ui-view></div>
+    <a ui-sref="home">home</a>
+    <a ui-sref="home.child1">child1</a>
+    <a ui-sref="home.child2">child2</a>
+    <div ui-view="home"></div>
 </body>
-<script src="./angular.js"></script>
-<script src="./angular-ui-router.js"></script>
+<script src="../angular.js"></script>
+<script src="../angular-ui-router.js"></script>
 <script>
     (function () {
         angular
@@ -30,22 +31,35 @@
                 $stateProvider
                     .state('home', {
                         url: '/home',
-                        template: "<div>我才不是home</div>"
-                    })
-                    .state('index', {
-                        url: '/index/{id}',
-                        template: "<div>index内容</div>",
-                        controller: function($stateParams){
-                           console.log($stateParams.id);
-                            
+                        views: {
+                            'home': {
+                                template: "<div><div ui-view='header'></div>  <div ui-view='nav'></div> <div ui-view='body'></div>  </div>"
+                            },
+                            'header@home': {
+                                template: '<div>header</div>'
+                            },
+                            'nav@home': {
+                                template: '<div>nav</div>'
+                            },
+                            'body@home': {
+                                template: '<div>body</div>'
+                            },
                         }
                     })
-                    .state('test', {
-                        url: '/test/:username',
-                        template: "<div>test内容</div>",
-                        controller: function($stateParams){
-                           console.log($stateParams.username);
-                            
+                    .state('home.child1', {
+                        url: '/child1',
+                        views: {
+                            'body@home': {
+                                template: "<div>child11111111111111111</div>"
+                            }
+                        }
+                    })
+                    .state("home.child2", {
+                        url: '/child2',
+                        views: {
+                            'body': { 
+                                template: "<div>child2222222222222222222</div>"
+                                 }
                         }
                     })
             }

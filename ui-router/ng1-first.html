@@ -7,12 +7,11 @@
 
 <body>
     <a ui-sref="home">home</a>
-    <div ui-view="header"></div>
-    <div ui-view="nav"></div>
-    <div ui-view="body"></div>
+    <a ui-sref="about">about</a>
+    <div ui-view></div>
 </body>
-<script src="./angular.js"></script>
-<script src="./angular-ui-router.js"></script>
+<script src="../angular.js"></script>
+<script src="../angular-ui-router.js"></script>
 <script>
     (function () {
         angular
@@ -31,19 +30,14 @@
                 $stateProvider
                     .state('home', {
                         url: '/home',
-                        views:{
-                            'header':{
-                                template: '<div>头部</div>'
-                            },
-                            'nav':{
-                                template: '<div>nav</div>'
-                            },
-                            'body':{
-                                template: '<div>body</div>'
-                            },
-                        }
+                        // templateUrl: "home.html",
+                        template: "<div>我才不是home</div>"
                     })
-                   
+                    .state('about', {
+                        url: '/about',
+                        // templateUrl: "home.html",
+                        template: "<div>我才不是about</div>"
+                    })
             }
 
         })()
