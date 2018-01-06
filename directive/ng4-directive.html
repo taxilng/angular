@@ -10,7 +10,7 @@
     <div class="hello"></div>
     <!-- directive:hello -->
 </body>
-<script src="./angular-1.6.8/angular.js"></script>
+<script src="../angular-1.6.8/angular.js"></script>
 <script>
 var myModule = angular.module('myModule',[]);
 
@@ -19,7 +19,7 @@ myModule.directive('hello',function ($templateCache) {
         scope: {},
         restrict : 'AEMC', 
         //  template: '<div>Hi everyone!</div>',
-        templateUrl: "hello.html",
+        templateUrl: "directive/hello.html",
         replace: true
     }
 })
