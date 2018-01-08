@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body ng-controller="formModule as vm">
+    <form name="myForm" ng-submit="vm.save()" >
+        <div contenteditable="true" ng-model="content" title="Click to edit">Some</div>
+        <pre>model = {{content}}</pre>
+        <input type="text" name="userName" ng-model="vm.user.userName" required>
+        <input type="password" name="userName" ng-model="vm.user.password" required>
+        <input type="submit" ng-disabled="myForm.$invalid">
+    </form>
+</body>
+<script src="../third/angular-1.2.29.js"></script>
+<script>
+    (function(){
+        angular
+            .module('myApp',[])
+            .controller('formModule',function(){
+                this.user = {
+                    userName: 'hah',
+                    password: "123"
+                }
+                this.save = function(){
+                    console.log("保存数据");
+                }
+            })
+            .directive('contenteditable', function(){
+                return {
+                    require: 'ngModel',
+                    link : function(scope, element, attrs, ctrl){
+                        //view -> model
+                        element.bind('keyup',function(){
+                            scope.$apply(function(){
+                                ctrl.$setViewValue(element.text())
+                            })
+                        })
+                        //model -> view
+                        ctrl.$render = function(){
+                            element.html(ctrl.$viewValue)
+                        }
+                        //load init value from DOM
+                        ctrl.$setViewValue(element.text())
+                    }
+                }
+            })
+    }())
+</script>
+</html>
