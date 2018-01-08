@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang='en' ng-app="myApp">
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body ng-controller="LanguageSwitchingCtrl">
+    <h1>{{ 'TITLE' | translate }}</h1>
+    <p>{{ 'FOO' | translate }}</p>
+    <select class="language-switching" ng-model="cur_lang" ng-change="switching(cur_lang)">
+        <option value="en">English</option>
+        <option value="cn">简体中文</option>
+    </select>
+    <!-- <p>{{'100001' | myFilter}}</p>
+    <p>{{'100001' | translate}}</p>
+    <p>{{login}}</p> -->
+    <p data-translate='100001'></p>
+</body>
+<script src="../third/angular.js"></script>
+<script src="../third/angular-translate.js"></script>
+<script src="../third/angular-translate-loader-static-files.js"></script>
+<script>
+    (function () {
+        angular
+            .module('myApp', ['pascalprecht.translate'])
+    })()
+</script>
+<script>
+        (function () {
+            //不太好处理异步
+            angular.module("myApp").filter("myFilter", ['$translate', '$rootScope', function ($translate, $rootScope) {
+                return function (key) {
+                    if (key) {
+                        $rootScope.$on('$translateChangeSuccess', function () {
+                            console.log($translate.instant(key));
+                            return $translate.instant(key);
+                        })
+                        // return '退出'
+                    }
+                };
+            }]);
+            angular
+                .module('myApp')
+
+                .config(stateConfig)
+                .controller('LanguageSwitchingCtrl', ['$scope', '$translate', '$rootScope', '$filter','Tabg', function ($scope, $translate, $rootScope, $filter, Tabg) {
+
+                    $rootScope.$on('$translateChangeSuccess', function () {
+                       
+                       console.log(Tabg.T('100001'));
+                        $translate('100001').then(function (login) {
+                            // console.log(login);
+                            $scope.login = login;
+
+                        })
+                    })
+                    $scope.switching = function (lang) {
+                        // console.log(lang);
+                        $translate.use(lang);
+                        window.localStorage.lang = lang;
+                    };
+                    $scope.cur_lang = 'cn';
+                }])
+
+            stateConfig.$inject = ['$translateProvider']
+            function stateConfig($translateProvider) {
+                var lang = window.localStorage.lang || 'cn';
+                $translateProvider.preferredLanguage(lang);
+                $translateProvider.useStaticFilesLoader({
+                    prefix: './i18n/',
+                    suffix: '.json'
+                });
+                // $translateProvider.translations('en', {
+                //     'TITLE': 'Hello',
+                //     'FOO': 'This is a paragraph',
+                //     '100001': 'signIn'
+                // });
+
+                // $translateProvider.translations('cn', {
+                //     'TITLE': '你好',
+                //     'FOO': '这是个段落',
+                //     '100001': '登录'
+                // });
+                // $translateProvider.preferredLanguage('cn');
+            }
+        })()
+
+
+    angular.module('myApp').factory('Tabg', ['$translate', function ($translate) {
+        var T = {
+            T: function (key) {
+                if (key) {
+                    return $translate.instant(key);
+                }
+                return key;
+            }
+        }
+        return T;
+    }]);
+</script>
+
+</html>
