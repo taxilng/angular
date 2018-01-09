@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body ng-controller="formModule">
+   <expander class="expander" expander-title="title">
+       {{text}}
+   </expander>
+</body>
+<script src="../third/angular-1.2.29.js"></script>
+<script>
+    (function(){
+        angular
+            .module('myApp',[])
+            .controller('formModule',function($scope){
+               $scope.title = '点击展开'
+               $scope.text = '这里是内部的内容'
+
+            })
+            .directive('expander', function(){
+                return {
+                    restrict: 'EA',
+                    replace: true,
+                    transclude: true,
+                    scope: {
+                        title: '=expanderTitle'
+                    },
+                    template : '<div>'+
+                    '<div class="title" ng-click="toggle()">{{title}}</div><div class="body" ng-show="showMe" ng-transclude></div> </div>'
+                    ,
+                    link : function(scope, element, attrs, ctrl){
+                       scope.showMe = false
+                       scope.toggle = function(){
+                           scope.showMe = !scope.showMe
+                       }
+                    }
+                }
+            })
+    }())
+</script>
+</html>
