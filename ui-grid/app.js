@@ -4,6 +4,8 @@ app.controller('ThirdCtrl', ['$scope', '$http', '$log', function ($scope, $http)
         expandableRowTemplate: '<div ui-grid="row.entity.subGridOptions" style="height:150px;"></div>',
         expandableRowHeight: 150,
         onRegisterApi: function (gridApi) {
+            console.log(gridApi);
+            
             gridApi.expandable.on.rowExpandedStateChanged($scope, function (row) {
                 if (row.isExpanded) {
                     row.entity.subGridOptions = {

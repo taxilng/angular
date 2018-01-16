@@ -20,9 +20,16 @@
 </script>
 <script>
         (function () {
+            var app = angular.module('myApp', ['ui.router'])
             angular
                 .module('myApp')
                 .config(stateConfig)
+                .run(['$rootScope', '$state','$location', function($rootScope, $state,$location,$scope,$http) {  
+                    $rootScope.$on('$stateChangeSuccess',function() {  
+                            console.log("jhh");
+                        }  
+                    );  
+                }]);  
             stateConfig.$inject = ['$stateProvider', '$urlRouterProvider']
             function stateConfig($stateProvider, $urlRouterProvider) {
                 $urlRouterProvider.otherwise('/');
@@ -38,7 +45,13 @@
                         // templateUrl: "home.html",
                         template: "<div>我才不是about</div>"
                     })
+
+                // $rootScope.$on('$stateChangeStart',
+                //     function () {
+                //          console.log('路由');
+                //     });
             }
+
 
         })()
     // var myApp = angular.module('myApp', ['ui.router'])

@@ -5,6 +5,20 @@
     <title></title>
 </head>
 <body>
-   <a href="mailto:hh@qq.com">邮箱</a>
+   <!-- <a href="mailto:hh@qq.com">邮箱</a> -->
+   <input id='box' type="text" placeholder="请输入">
 </body>
+<!-- <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>   -->
+<script type="text/javascript">  
+// document.write(returnCitySN["cip"]+','+returnCitySN["cname"])  
+var box = document.querySelector('#box')
+var timer = null
+box.onkeyup = function(){
+    clearTimeout(timer)
+    console.log(timer) 
+    timer = setTimeout(function () {
+       console.log('aa')
+    },2000)
+}
+</script>
 </html>
