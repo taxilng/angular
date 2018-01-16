@@ -12,27 +12,33 @@
 </body>
 <script src="../third/angular.js"></script>
 <script src="../third/angular-ui-router.js"></script>
+<script src="../third/stateEvents.js"></script>
 <script>
     (function () {
-        angular
-            .module('myApp', ['ui.router'])
+        // angular
+        //     .module('myApp', ['ui.router'])
     })()
 </script>
 <script>
         (function () {
-            var app = angular.module('myApp', ['ui.router'])
-            angular
-                .module('myApp')
-                .config(stateConfig)
-                .run(['$rootScope', '$state','$location', function($rootScope, $state,$location,$scope,$http) {  
+            var app = angular.module('myApp', ['ui.router','ui.router.state.events'])
+
+                app.config(stateConfig)
+                app.run(['$rootScope', '$state','$location','$transitions', function($rootScope, $state,$location,$transitions,$http) {
                     $rootScope.$on('$stateChangeSuccess',function() {  
-                            console.log("jhh");
+                            console.log("成功进入");
                         }  
-                    );  
+                    );
+                    $transitions.onBefore({}, function(transition) {
+                        console.log("进入路由之前");
+                    });
+                    $transitions.onStart({}, function(transition) {
+                        console.log("开始路由");
+                    });
                 }]);  
             stateConfig.$inject = ['$stateProvider', '$urlRouterProvider']
             function stateConfig($stateProvider, $urlRouterProvider) {
-                $urlRouterProvider.otherwise('/');
+                $urlRouterProvider.otherwise('/home');
 
                 $stateProvider
                     .state('home', {
