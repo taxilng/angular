@@ -5,18 +5,23 @@ app.controller('ThirdCtrl', ['$scope', '$http', '$log', function ($scope, $http)
         expandableRowHeight: 150,
         onRegisterApi: function (gridApi) {
             console.log(gridApi);
-            
+            var rowEntity = null
             gridApi.expandable.on.rowExpandedStateChanged($scope, function (row) {
+                if (rowEntity !== row.entity) {
+                    gridApi.expandable.collapseRow(rowEntity)
+                }
+                rowEntity = row.entity
                 if (row.isExpanded) {
                     row.entity.subGridOptions = {
                         columnDefs: [
-                            { name: 'name'},
-                            { name: 'gender'},
-                            { name: 'company'}
-                        ]};
+                            {name: 'name'},
+                            {name: 'gender'},
+                            {name: 'company'}
+                        ]
+                    };
 
                     $http.get('./100.json')
-                        .then(function(response) {
+                        .then(function (response) {
                             row.entity.subGridOptions.data = response.data;
                         });
                 }
@@ -25,18 +30,17 @@ app.controller('ThirdCtrl', ['$scope', '$http', '$log', function ($scope, $http)
     }
 
     $scope.gridOptions.columnDefs = [
-        { name: 'id', pinnedLeft:true },
-        { name: 'name'},
-        { name: 'age'},
-        { name: 'address.city'}
+        {name: 'id', pinnedLeft: true},
+        {name: 'name'},
+        {name: 'age'},
+        {name: 'address.city'}
     ];
 
     $http.get('./500.json')
-        .then(function(response) {
+        .then(function (response) {
             $scope.gridOptions.data = response.data;
         });
 }]);
-
 
 
 // app.controller('MainCtrl', ['$scope', '$http', '$log', function ($scope, $http, $log) {
