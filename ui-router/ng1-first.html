@@ -6,9 +6,9 @@
 </head>
 
 <body>
-<a ui-sref="home">home</a>
-<a ui-sref="about">about</a>
-<div ui-view></div>
+    <a ui-sref="home">home</a>
+    <a ui-sref="about">about</a>
+    <div ui-view></div>
 </body>
 <script src="../third/angular.js"></script>
 <script src="../third/angular-ui-router.js"></script>
@@ -16,50 +16,63 @@
 <script>
     (function () {
         angular
-            .module('myApp', ['ui.router','ui.router.state.events'])
+            .module('myApp', ['ui.router', 'ui.router.state.events'])
     })()
 </script>
 <script>
-    (function () {
-       angular.module('myApp')
-           .config(stateConfig)
-            .run(['$rootScope', '$state', '$location', '$transitions', function ($rootScope, $state, $location, $transitions, $http) {
-            $rootScope.$on('$stateChangeSuccess', function () {
-                    console.log("成功进入");
-                }
-            );
-            $transitions.onBefore({}, function (transition) {
-                console.log("进入路由之前");
-            });
-            $transitions.onStart({}, function (transition) {
-                console.log("开始路由");
-            });
-        }]);
-        stateConfig.$inject = ['$stateProvider', '$urlRouterProvider']
+        (function () {
+            angular.module('myApp')
+                .config(stateConfig)
+                .run(['$rootScope', '$transitions', '$q', '$http',function ($rootScope, $transitions, $q,$http) {
+                    var deferred = $q.defer();
+                    var flag = false
+                    $rootScope.$on('$stateChangeSuccess', function () {
+                        console.log("成功进入");
+                    }
+                    );
+                    $transitions.onBefore({}, function (transition) {
+                        console.log("进入路由之前");
+                    });
+                    $transitions.onStart({}, function (transition) {
+                        $http({
+                            method: 'GET',
+                            url: 'https://cnodejs.org/api/v1/topics'
+                        }).then(function (res) {
+                             console.log(res);
+                             deferred.resolve(res)
+                             flag = true
+                        }, function (response) {
+                            // 请求失败执行代码
+                        });
 
-        function stateConfig($stateProvider, $urlRouterProvider) {
-            $urlRouterProvider.otherwise('/home');
+                        return flag
+                    });
+                }]);
+            stateConfig.$inject = ['$stateProvider', '$urlRouterProvider']
 
-            $stateProvider
-                .state('home', {
-                    url: '/home',
-                    // templateUrl: "home.html",
-                    template: "<div>我才不是home</div>"
-                })
-                .state('about', {
-                    url: '/about',
-                    // templateUrl: "home.html",
-                    template: "<div>我才不是about</div>"
-                })
+            function stateConfig($stateProvider, $urlRouterProvider) {
+                $urlRouterProvider.otherwise('/home');
 
-            // $rootScope.$on('$stateChangeStart',
-            //     function () {
-            //          console.log('路由');
-            //     });
-        }
+                $stateProvider
+                    .state('home', {
+                        url: '/home',
+                        // templateUrl: "home.html",
+                        template: "<div>我才不是home</div>"
+                    })
+                    .state('about', {
+                        url: '/about',
+                        // templateUrl: "home.html",
+                        template: "<div>我才不是about</div>"
+                    })
+
+                // $rootScope.$on('$stateChangeStart',
+                //     function () {
+                //          console.log('路由');
+                //     });
+            }
 
 
-    })()
+        })()
     // var myApp = angular.module('myApp', ['ui.router'])
     // myApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
     //     $urlRouterProvider.otherwise('/');
