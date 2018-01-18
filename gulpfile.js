@@ -14,12 +14,16 @@ gulp.task('config', function () {
     //         }
     //     }))
     //     .pipe(gulp.dest('dist'));
-    
-    var data = JSON.stringify()
+
+    var data = null;
+    if (gulp.env.dev) {
+        data = '开发环境'
+    } else if (gulp.env.uat) {
+        data = '测试环境'
+    }
     fs.writeFile('./app/config.js', data, (err) => {
         if (err) {
             throw err;
         }
-        console.log('异步文件被保存');
     })
 });
