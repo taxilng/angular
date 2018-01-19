@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang='en' ng-app="myApp" ui-router-styles>
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+    <a ui-sref="home">home</a>
+    <a ui-sref="about">about</a>
+    <div ui-view></div>
+</body>
+<script src="../third/angular.js"></script>
+<script src="../third/angular-ui-router.js"></script>
+<script src="../third/stateEvents.js"></script>
+<script src="../third/ui-router-styles.js"></script>
+<script>
+    (function () {
+        angular
+            .module('myApp', ['ui.router', 'ui.router.state.events','uiRouterStyles'])
+    })()
+</script>
+<script>
+    (function () {
+        angular.module('myApp')
+            .config(stateConfig)
+        stateConfig.$inject = ['$stateProvider', '$urlRouterProvider']
+        function stateConfig($stateProvider, $urlRouterProvider) {
+            $urlRouterProvider.otherwise('/home');
+            $stateProvider
+                .state('home', {
+                    url: '/home',
+                    // templateUrl: "home.html",
+                    template: "<div>我才不是home</div>",
+                    data: {
+                        css: '../css/home.css'
+                    }
+                })
+                .state('about', {
+                    url: '/about',
+                    // templateUrl: "home.html",
+                    template: "<div>我才不是about</div>"
+                })
+        }
+    })()
+</script>
+
+</html>

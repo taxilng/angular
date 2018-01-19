@@ -1,0 +1,74 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <title>通过filereader接口读取文件</title>
+    <style>
+        .upload {
+            padding: 5px 10px;
+            position: relative;
+            display: inline-block;
+            border: 1px solid #d9d9d9;
+            border-radius: 3px;
+        }
+
+        .upload:hover {
+            color: #333;
+            background-color: #e6e6e6;
+            border-color: #b4b4b4;
+        }
+
+        #imagefile {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50px;
+            height: 30px;
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <label>请选择一个文件：</label>
+    <div class="upload">
+        <input type="file" id="imagefile" /> 上传
+    </div>
+
+    <!-- <input type="button" value="读取图像" onClick="readAsDataURL();" /> -->
+
+    <div name="result" id="result">
+        <!-- 这里用来显示图片结果-->
+    </div>
+</body>
+<script type="text/javascript">
+    var file = document.querySelector("#imagefile");
+    file.addEventListener('change', function () {
+        console.log('改变了');
+        readAsDataURL()
+    })
+
+    function readAsDataURL() {
+        if (typeof FileReader == 'undifined') //判断浏览器是否支持filereader
+        {
+            result.innerHTML = "<p>抱歉，你的浏览器不支持 FileReader</p>";
+            return false;
+        }
+        var file = document.getElementById("imagefile").files[0];
+        if (!/image\/\w+/.test(file.type)) //判断获取的是否为图片文件
+        {
+            alert("请确保文件为图像文件");
+            return false;
+        }
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function (e) {
+            var result = document.getElementById("result");
+            result.innerHTML = '<img src="' + this.result + '" alt=""/ style="width:300px">'
+        }
+
+    }
+</script>
+
+</html>
