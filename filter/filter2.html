@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang='en' ng-app="myApp" ui-router-styles>
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+{{'大漠穹丘' | filter1}} <br/>
+</body>
+<script src="../third/angular.js"></script>
+<script>
+    (function () {
+        angular.module('myApp', [])
+    })()
+</script>
+<script>
+    (function () {
+        angular
+            .module('myApp')
+            .filter('filter1',()=>{
+                return function (item) {
+                    return item + 'LOL'
+                }
+            })
+    })()
+</script>
+
+</html>
