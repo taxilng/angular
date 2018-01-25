@@ -7,7 +7,7 @@
 {{1516639021157 | date}} <br/>
 {{1516639021157 | date:'MM/dd/yyyy @ h:mma'}} <br/>
 {{1516639021157 | date:'yyyy-MM-dd  hh:mm:ss'}} <br/>
-{{money | currency}} <br/>
+{{hh}} <br/>
 </body>
 <script src="../third/angular.js"></script>
 <script>
@@ -18,9 +18,10 @@
 <script>
     (function () {
         angular.module('myApp')
-        .controller('myCtrl',['$scope',function ($scope) {
+        .controller('myCtrl',['$scope','$filter',function ($scope, $filter) {
             $scope.money = 343223
             console.log($scope.money);
+            $scope.hh= $filter('currency')($scope.money);
             
         }])
     })()
