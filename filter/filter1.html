@@ -3,10 +3,11 @@
 <head>
     <meta charset="utf-8">
 </head>
-<body>
+<body ng-controller="myCtrl">
 {{1516639021157 | date}} <br/>
 {{1516639021157 | date:'MM/dd/yyyy @ h:mma'}} <br/>
 {{1516639021157 | date:'yyyy-MM-dd  hh:mm:ss'}} <br/>
+{{money | currency}} <br/>
 </body>
 <script src="../third/angular.js"></script>
 <script>
@@ -15,9 +16,14 @@
     })()
 </script>
 <script>
-    // (function () {
-    //     angular.module('myApp')
-    // })()
+    (function () {
+        angular.module('myApp')
+        .controller('myCtrl',['$scope',function ($scope) {
+            $scope.money = 343223
+            console.log($scope.money);
+            
+        }])
+    })()
 </script>
 
 </html>
