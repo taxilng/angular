@@ -34,8 +34,9 @@
     <label>请选择一个文件：</label>
     <div class="upload">
         <input type="file" id="imagefile" /> 上传
-    </div>
 
+    </div>
+    <button class="uploader">确定</button>
     <!-- <input type="button" value="读取图像" onClick="readAsDataURL();" /> -->
 
     <div name="result" id="result">
@@ -43,7 +44,10 @@
     </div>
 </body>
 <script type="text/javascript">
+    var flag = false;
     var file = document.querySelector("#imagefile");
+    var uploader = document.querySelector(".uploader");
+    var result = document.getElementById("result");
     file.addEventListener('change', function () {
         console.log('改变了');
         readAsDataURL()
@@ -55,23 +59,36 @@
             result.innerHTML = "<p>抱歉，你的浏览器不支持 FileReader</p>";
             return false;
         }
-        var file = document.getElementById("imagefile")
-        .files[0];
+        var file = document.getElementById("imagefile").files[0];
         console.log(file.name);
-        
+
         if (!/image\/\w+/.test(file.type)) //判断获取的是否为图片文件
         {
             alert("请确保文件为图像文件");
+            result.innerHTML = ''
+            flag = false;
             return false;
         }
         var reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = function (e) {
-            var result = document.getElementById("result");
+            flag = true;
+          
             result.innerHTML = '<img src="' + this.result + '" alt=""/ style="width:300px">'
         }
 
     }
+
+    uploader.addEventListener('click', function () {
+        var file = document.getElementById("imagefile").files[0];
+        if(flag){
+            console.log(file);
+        }else{
+            result.innerHTML = ''
+        }
+       
+
+    })
 </script>
 
 </html>
