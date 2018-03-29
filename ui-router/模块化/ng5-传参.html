@@ -1,14 +1,13 @@
 <!doctype html>
-<html lang="en" ng-app="myApp">
+<html lang='en' ng-app="myApp">
 
 <head>
-    <title>resolve</title>
     <meta charset="utf-8">
 </head>
 
 <body>
-    <a ui-sref="index">index</a>
-    <a ui-sref="home">home</a>
+    <a ui-sref="index({id:30})">index</a>
+    <a ui-sref="test({username:'jack'})">test</a>
     <div ui-view></div>
 </body>
 <script src="../third/angular.js"></script>
@@ -34,37 +33,19 @@
                         template: "<div>我才不是home</div>"
                     })
                     .state('index', {
-                        url: '/index',
+                        url: '/index/{id}',
                         template: "<div>index内容</div>",
-                        resolve: {
-                            user: function () {
-                                return {
-                                    name: 'javk',
-                                    email: 'hoperun'
-                                }
-
-                            },
-                            myId: function ($http, user) {
-                                 $http({
-                                    method: 'GET',
-                                    url: 'https://cnodejs.org/api/v1/topics'
-                                }).then(function(data){
-                                        user.api = data.data.data
-                                })
-                            }
-                        },
-                        controller: function (user, user,myId) {
-                            // alert(user.name)
-                            // alert(user.email)
-                            console.log(user)
+                        controller: function($stateParams){
+                           console.log($stateParams.id);
+                            
                         }
                     })
                     .state('test', {
                         url: '/test/:username',
                         template: "<div>test内容</div>",
-                        controller: function ($stateParams) {
-                            console.log($stateParams.username);
-
+                        controller: function($stateParams){
+                           console.log($stateParams.username);
+                            
                         }
                     })
             }
