@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="IE-edge">
+    <title>日期选择</title>
+    <link rel="stylesheet" href="../bower_components/bootstrap-datetimepicker/sample in bootstrap v3/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">
+    <style>
+    </style>
+</head>
+
+<body ng-controller="formModule">
+    <div class="detail">
+        <div class="top-bar">
+            <h>模态框</h>
+        </div>
+        <div class="item-detail">
+            <div class="row">
+                <div class="col-xs-3">
+                    <div class="input-group date timepicker" timepicker ng-model="data.time">
+                        <input size="16" type="text" class="form-control" readonly>
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </span>
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-1">
+                    <span class="title">时间：</span>
+                </div>
+                <div class="col-xs-10">
+                    {{data.time}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <button class="btn btn-primary" ng-click="logTime()">打印时间</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../third/angular.js"></script>
+<script src="../third/jquery-1.10.0.js"></script>
+<script src="../bower_components/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<script src="../bower_components/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.fr.js"></script>
+
+<script>
+    (function () {
+        angular
+            .module('myApp', [])
+    })()
+</script>
+<script>
+    (function () {
+        var app = angular.module('myApp');
+
+        app.directive('timepicker', ['$timeout', timepicker]);
+        app.controller('formModule', ['$scope', HomeController])
+
+        function timepicker($timeout) {
+            return {
+                require: '?ngModel',
+                restrict: 'A',
+                scope: {
+                    ngModel: '='
+                },
+                link: function (scope, elem, attrs, ngModel) {
+                    // timeout internals are called once directive rendering is complete
+                    $timeout(function () {
+                        $(elem).datetimepicker({
+                            format: attrs.format,
+                            autoclose: true,
+                            todayBtn: true,
+                            minuteStep: 1,
+                            language: 'fr', //中文
+                            forceParse: false, //选择框取消后不允许修改
+                            todayHighlight: true, //高亮显示今天日期
+                            viewSelect: 'year',
+                            format: 'yyyy-mm-dd hh:ii'
+                            // format:'yyyy-mm-dd hh:ii:ss'
+                        }).on('hide', function () {
+                            var _this = $(this.children[0]);
+                            var val = new Date(_this.val()).getTime();
+                            ngModel.$setViewValue(val);
+                         
+                        });
+                    });
+                }
+            };
+        }
+
+        function HomeController($scope) {
+            var context = $scope;
+
+            context.logTime = logTime;
+            console.log("时间控件");
+
+            $scope.data = {
+                time: '2016-12-09 17:11'
+            };
+
+            function logTime() {
+                console.log($scope.data);
+            }
+        }
+    })()
+</script>
+
+</html>

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="IE-edge">
+    <title>日期选择</title>
+    <link rel="stylesheet" href="../bower_components/bootstrap-datetimepicker/sample in bootstrap v3/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">
+    <style>
+    </style>
+</head>
+
+<body ng-controller="formModule">
+    <div class="detail">
+        <div class="top-bar">
+            <h>模态框</h>
+        </div>
+        <div class="item-detail">
+            <div class="row">
+                <div class="col-xs-3">
+                    <date-dir time="timer"></date-dir>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-1">
+                    <span class="title">时间：</span>
+                </div>
+                <div class="col-xs-10">
+                    {{timer}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <button class="btn btn-primary" ng-click="logTime()">打印时间</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../third/angular.js"></script>
+<script src="../third/jquery-1.10.0.js"></script>
+<script src="../bower_components/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<script src="../bower_components/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.fr.js"></script>
+<script>
+    (function () {
+        angular
+            .module('myApp', [])
+    })()
+</script>
+<script src="../directive/datepicker/date.directive.js"></script>
+
+
+<script>
+    (function () {
+        var app = angular.module('myApp');
+
+          app.controller('formModule', ['$scope', HomeController])
+
+     
+        function HomeController($scope) {
+            var context = $scope;
+            $scope.$watch('timer',function(time){
+               
+            })
+            context.logTime = logTime;
+            // console.log("时间控件");
+
+            $scope.timer =  '2016-12-05 17:11'
+
+            function logTime() {
+                console.log($scope.timer);
+            }
+        }
+    })()
+</script>
+
+</html>
