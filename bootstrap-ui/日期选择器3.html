@@ -19,7 +19,7 @@
         <div class="item-detail">
             <div class="row">
                 <div class="col-xs-3">
-                    <date-dir time="timer"></date-dir>
+                    <date-dir ng-model="timer"></date-dir>
                 </div>
             </div>
 
@@ -28,7 +28,7 @@
                     <span class="title">时间：</span>
                 </div>
                 <div class="col-xs-10">
-                    {{timer}}
+                       <input size="16" type="text" class="form-control"   ng-model="timer">
                 </div>
             </div>
             <div class="row">
@@ -42,7 +42,7 @@
 <script src="../third/angular.js"></script>
 <script src="../third/jquery-1.10.0.js"></script>
 <script src="../bower_components/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
-<script src="../bower_components/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.fr.js"></script>
+<script src="../bower_components/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script>
     (function () {
         angular
@@ -60,18 +60,19 @@
 
      
         function HomeController($scope) {
+            function logTime() {
+                console.log($scope.timer);
+            }
             var context = $scope;
             $scope.$watch('timer',function(time){
-               
+                console.log('timer变化');
             })
             context.logTime = logTime;
             // console.log("时间控件");
 
             $scope.timer =  '2016-12-05 17:11'
 
-            function logTime() {
-                console.log($scope.timer);
-            }
+            
         }
     })()
 </script>
