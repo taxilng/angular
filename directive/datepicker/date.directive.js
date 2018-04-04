@@ -6,7 +6,7 @@
 
     function timepicker($timeout) {
         var directive = {
-            require: '?ngModel',
+            require: '?ngModel',//可以获取模板的ng-model里面的值，作为link的第四参数
             restrict: 'E',
             templateUrl: '../directive/datepicker/date.html',
             scope: {
