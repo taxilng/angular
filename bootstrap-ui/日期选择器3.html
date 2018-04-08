@@ -19,7 +19,7 @@
         <div class="item-detail">
             <div class="row">
                 <div class="col-xs-3">
-                    <date-dir ng-model="timer"></date-dir>
+                    <date-dir ng-model="timer" min-time="startTime" max-time="endTime"></date-dir>
                 </div>
             </div>
 
@@ -62,6 +62,8 @@
         function HomeController($scope) {
             function logTime() {
                 console.log($scope.timer);
+                $scope.startTime =  '2018-4-5'
+
             }
             var context = $scope;
             $scope.$watch('timer',function(time){
@@ -71,6 +73,9 @@
             // console.log("时间控件");
 
             $scope.timer =  '2016-12-05 17:11'
+            // $scope.startTime =  new Date()
+            $scope.startTime =  '2018-4-9'
+            $scope.endTime =  '2018-4-15'
 
             
         }
