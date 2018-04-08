@@ -46,6 +46,7 @@
             })
             scope.$watch('maxTime', function (time) {
                 $(elem).children().datetimepicker('setEndDate', time)
+                $(elem).children().datetimepicker('setLang', 'en')
             })
         }
         return directive
