@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <meta charset="utf-8">
+    <title>日期选择</title>
+    <link rel="stylesheet" href="../third/bootstrap.css">
+</head>
+
+<body ng-controller="formModule">
+    <!-- <div class="input-group">
+        <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" alt-input-formats="['yyyy-M!-d!']" ng-model="time" ng-click="openCalendar(1)" ng-disabled="readonly" is-open="datePickerOptions.startMinOpened" datepicker-options="datePickerOptions">
+        <span class="input-group-addon"><i class=""  ng-click="openCalendar(1)" >日历</i></span>
+    </div> -->
+    <div class="form-group col-sm-6">
+        <label>日期：</label>
+        <div class="input-group m-d">
+            <input type="text" class="form-control" name="loanDate" datepicker-popup="{{format}}" ng-model="finance.loanDate" is-open="loanDate"
+                datepicker-options="dateOptions" close-text="Close" />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="openDatepicker($event,1)">
+                    <!-- <i class="glyphicon glyphicon-calendar"></i> -->
+                </button>
+            </span>
+        </div>
+    </div>
+    <p class="input-group">
+        <input type="text" class="form-control" datetime-picker="dd MMM yyyy HH:mm" ng-model="myDate" is-open="isOpen" />
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="openCalendar($event, prop)">
+                <i class="fa fa-calendar"></i>
+            </button>
+        </span>
+    </p>
+</body>
+<script src="../third/angular.js"></script>
+<script src="../third/angular-ui-router.js"></script>
+<script src="../third/ui-bootstrap-tpls-2.5.0.js"></script>
+<script src="../third/datetime-picker.js"></script>
+<!-- <script src="../third/moment.js"></script> -->
+<!-- <script src="../third/moment-timezone-with-data.js"></script> -->
+<script src="../bower_components/moment/moment.js"></script>
+<script src="../bower_components/moment-timezone/builds/moment-timezone-with-data.min.js"></script>
+
+<script>
+    console.log(moment.tz.guess());
+    (function () {
+        angular
+            .module('myApp', ['ui.router', 'ui.bootstrap', 'ui.bootstrap.datetimepicker'])
+    })()
+</script>
+<script>
+    (function () {
+        angular
+            .module('myApp')
+            .config(stateConfig)
+            .controller('formModule', function ($scope, $timeout) {
+                console.log('hh');
+                $scope.dateOptions = {
+                    startingDay: 1,
+                    class: 'datepicker'
+                };
+                //日期控件
+                $scope.format = "yyyy-MM-dd";
+                $scope.openDatepicker = function ($event, i) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+                    if (i == 1) {
+                        $scope.loanDate = true;
+                    }
+                }
+                var that = this;
+
+                this.isOpen = false;
+
+                this.openCalendar = function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    that.isOpen = true;
+                };
+
+            })
+        stateConfig.$inject = ['$stateProvider', '$urlRouterProvider']
+
+        function stateConfig($stateProvider, $urlRouterProvider) {
+            $urlRouterProvider.otherwise('/');
+
+            $stateProvider
+                .state('home', {
+                    url: '/home',
+                    views: {
+                        'header': {
+                            template: '<div>头部</div>'
+                        },
+                        'nav': {
+                            template: '<div>nav</div>'
+                        },
+                        'body': {
+                            template: '<div>body</div>'
+                        },
+                    }
+                })
+
+        }
+
+    })()
+    // var myApp = angular.module('myApp', ['ui.router'])
+    // myApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+    //     $urlRouterProvider.otherwise('/');
+
+    //     $stateProvider
+    //         .state('home', {
+    //             url: '/home',
+    //             // templateUrl: "home.html",
+    //             template: "<div>我才不是home</div>"
+    //         })
+    //         .state('about', {
+    //             url: '/about',
+    //             // templateUrl: "home.html",
+    //             template: "<div>我才不是about</div>"
+    //         })
+    // }])
+</script>
+
+</html>

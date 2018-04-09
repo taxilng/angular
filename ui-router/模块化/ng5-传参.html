@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang='en' ng-app="myApp">
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <a ui-sref="index({id:30})">index</a>
+    <a ui-sref="test({username:'jack'})">test</a>
+    <div ui-view></div>
+</body>
+<script src="../third/angular.js"></script>
+<script src="../third/angular-ui-router.js"></script>
+<script>
+    (function () {
+        angular
+            .module('myApp', ['ui.router'])
+    })()
+</script>
+<script>
+        (function () {
+            angular
+                .module('myApp')
+                .config(stateConfig)
+            stateConfig.$inject = ['$stateProvider', '$urlRouterProvider']
+            function stateConfig($stateProvider, $urlRouterProvider) {
+                $urlRouterProvider.otherwise('/');
+
+                $stateProvider
+                    .state('home', {
+                        url: '/home',
+                        template: "<div>我才不是home</div>"
+                    })
+                    .state('index', {
+                        url: '/index/{id}',
+                        template: "<div>index内容</div>",
+                        controller: function($stateParams){
+                           console.log($stateParams.id);
+                            
+                        }
+                    })
+                    .state('test', {
+                        url: '/test/:username',
+                        template: "<div>test内容</div>",
+                        controller: function($stateParams){
+                           console.log($stateParams.username);
+                            
+                        }
+                    })
+            }
+
+        })()
+    // var myApp = angular.module('myApp', ['ui.router'])
+    // myApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+    //     $urlRouterProvider.otherwise('/');
+
+    //     $stateProvider
+    //         .state('home', {
+    //             url: '/home',
+    //             // templateUrl: "home.html",
+    //             template: "<div>我才不是home</div>"
+    //         })
+    //         .state('about', {
+    //             url: '/about',
+    //             // templateUrl: "home.html",
+    //             template: "<div>我才不是about</div>"
+    //         })
+    // }])
+</script>
+
+</html>

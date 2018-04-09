@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+        $.ajax({
+            type: 'get',
+            dataType:'json',
+            // jsonp: "jsoncallback",
+            url: 'http://api.goseek.cn/Tools/holiday?date=20180211',
+            success: function (res) {
+                console.log(res);
+            },
+            complete: function (res) {
+                // console.log(res);
+            },   
+             error: function (res) {
+                console.info(res);
+            },
+        })
+    </script>
+</body>
+
+</html>
