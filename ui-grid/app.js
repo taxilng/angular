@@ -3,14 +3,16 @@ app.controller('ThirdCtrl', ['$scope', '$http', '$log', function ($scope, $http)
     $scope.gridOptions = {
         expandableRowTemplate: '<div ui-grid="row.entity.subGridOptions" style="height:150px;"></div>',
         expandableRowHeight: 150,
+        // enableExpandableRowHeader :true ,
+        showExpandAllButton : false ,
         onRegisterApi: function (gridApi) {
             console.log(gridApi);
             var rowEntity = null
             gridApi.expandable.on.rowExpandedStateChanged($scope, function (row) {
-                if (rowEntity !== row.entity) {
-                    gridApi.expandable.collapseRow(rowEntity)
-                }
-                rowEntity = row.entity
+                // if (rowEntity !== row.entity) {
+                //     gridApi.expandable.collapseRow(rowEntity)
+                // }
+                // rowEntity = row.entity
                 if (row.isExpanded) {
                     row.entity.subGridOptions = {
                         columnDefs: [
